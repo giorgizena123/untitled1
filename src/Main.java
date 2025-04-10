@@ -1,65 +1,54 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.util.Optional;
+
+public class AlertOnClicks extends Application {
+
+    private int clickCount = 0;
+
+    @Override
+    public void start(Stage primaryStage) {
+        Button centerButton = new Button("დამაჭირე!");
+        centerButton.setOnAction(event -> {
+            clickCount++;
+            if (clickCount == 5) {
+                showAlertAndClose(primaryStage);
+                clickCount = 0; // Reset counter after alert
+            }
+        });
+
+        StackPane root = new StackPane(centerButton);
+        Scene scene = new Scene(root, 300, 200);
+
+        primaryStage.setTitle("Alert აპლიკაცია");
+        primaryStage.setScene(scene);
+
+        // X-ით გამორთვის დაბლოკვა
+        primaryStage.setOnCloseRequest(WindowEvent::consume);
+
+        primaryStage.show();
+    }
+
+    private void showAlertAndClose(Stage stage) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("გამორთვა");
+        alert.setHeaderText("გსურთ აპლიკაციის გამორთვა?");
+        alert.setContentText("აირჩიეთ Ok თუ გსურთ გამორთვა, Cancel თუ არა.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            stage.close();
+        }
+    }
+
     public static void main(String[] args) {
-        //1)
-        int a=5;
-        int b=7;
-        a=a+b;
-        b=a-b;
-        a=a-b;
-        System.out.println(a);
-        System.out.println(b);
-//2
-        double c=10.34;
-        int k=(int) c;
-        System.out.println(c-k);
-
-//3
-        int t=394;
-        if(t/100>=1 && t/100 <=9){
-            System.out.println("samnishnaa");
-        }
-        else{
-            System.out.println("ar aris samnishna");
-        }
-//4)
-        char q='t';
-        char y=(char)(q-32);
-
-        System.out.println(y);
-
-//5)
-        double o=14.4;
-        int u=(int) o;
-        double l=o-u;
-        if(l<0.5){
-            System.out.println(u);
-        }
-        else{
-            System.out.println((int)(o+l));
-        }
-//6)
-        int ar=8;
-        int br=9;
-        int kr=0;
-        if(ar*br<=kr*kr){
-            System.out.println(kr);;
-        }
-        else{
-            kr++;
-        }
-//7)
-        int sec=7852;
-        int qe=3600;
-        int le=60;
-        int hour=(sec/3600);
-        int min=(sec-hour*3600)/le;
-        int seconds=sec-hour*3600-min*60;
-        System.out.println(hour+":"+min+":"+seconds);
-
-        //8)     if-ebis gareshea ukve
-
-         }
-     }
-
+        launch(args);
+    }
+}
