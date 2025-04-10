@@ -30,7 +30,7 @@ public class AlertOnClicks extends Application {
         primaryStage.setTitle("Alert აპლიკაცია");
         primaryStage.setScene(scene);
 
-        // X-ით გამორთვის დაბლოკვა
+       
         primaryStage.setOnCloseRequest(WindowEvent::consume);
 
         primaryStage.show();
